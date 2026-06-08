@@ -11,7 +11,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, sans-serif;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
@@ -29,37 +29,43 @@ text-align:center;
 padding:20px;
 }
 
-h1{
-font-size:60px;
-color:#d4af37;
-margin-bottom:20px;
+.logo{
+font-size:90px;
+margin-bottom:15px;
 }
 
-p{
+h1{
+color:#d4af37;
+font-size:55px;
+margin-bottom:10px;
+}
+
+.tagline{
 font-size:20px;
 margin-bottom:30px;
+color:#ddd;
 }
 
-button{
+.btn{
 background:#d4af37;
 color:black;
+padding:15px 40px;
 border:none;
-padding:15px 35px;
+border-radius:40px;
 font-size:18px;
 font-weight:bold;
-border-radius:30px;
 cursor:pointer;
 }
 
-#menu{
+#potongan{
 display:none;
-padding:50px 20px;
+padding:40px 20px;
 text-align:center;
 }
 
 .card{
-background:#1a1a1a;
-max-width:400px;
+background:#1b1b1b;
+max-width:450px;
 margin:20px auto;
 padding:25px;
 border-radius:15px;
@@ -71,82 +77,132 @@ color:#d4af37;
 margin-bottom:10px;
 }
 
-.card button{
-margin-top:15px;
+.card p{
+margin-bottom:15px;
 }
 
-#pilihan{
+.result{
 margin-top:30px;
-font-size:24px;
+padding:25px;
+background:#1b1b1b;
+max-width:500px;
+margin-left:auto;
+margin-right:auto;
+border-radius:15px;
+display:none;
+}
+
+.number{
+font-size:60px;
 color:#d4af37;
+font-weight:bold;
+}
+
+.wait{
+margin-top:10px;
+font-size:22px;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<section class="welcome" id="welcome">
+<div class="welcome" id="welcome">
+
+<div class="logo">💈</div>
 
 <h1>IXFAN BARBERSHOP</h1>
 
-<p>
+<p class="tagline">
 Selamat Datang Ke Ixfan Barbershop
 </p>
 
-<button onclick="masukWebsite()">
-SELAMAT DATANG
+<button class="btn" onclick="masuk()">
+MASUK
 </button>
 
-</section>
+</div>
 
-<section id="menu">
+<div id="potongan">
 
 <h1>Pilih Potongan Rambut</h1>
 
 <div class="card">
 <h2>High Fade</h2>
 <p>Potongan fade tinggi yang moden dan kemas.</p>
-<button onclick="pilih('High Fade')">
-Pilih High Fade
+<button class="btn" onclick="ambilGiliran('High Fade')">
+Pilih
 </button>
 </div>
 
 <div class="card">
 <h2>Mid Fade</h2>
 <p>Potongan fade sederhana yang popular.</p>
-<button onclick="pilih('Mid Fade')">
-Pilih Mid Fade
+<button class="btn" onclick="ambilGiliran('Mid Fade')">
+Pilih
 </button>
 </div>
 
 <div class="card">
 <h2>Low Fade</h2>
-<p>Potongan fade rendah yang kemas dan profesional.</p>
-<button onclick="pilih('Low Fade')">
-Pilih Low Fade
+<p>Potongan fade rendah yang profesional.</p>
+<button class="btn" onclick="ambilGiliran('Low Fade')">
+Pilih
 </button>
 </div>
 
-<div id="pilihan"></div>
+<div class="result" id="result">
 
-</section>
+<h2>Potongan Dipilih</h2>
+
+<p id="jenis"></p>
+
+<p>Nombor Giliran Anda</p>
+
+<div class="number" id="nombor"></div>
+
+<div class="wait">
+Sila tunggu sebentar...
+</div>
+
+</div>
+
+</div>
 
 <script>
 
-function masukWebsite(){
+let giliran = localStorage.getItem("ixfan_giliran");
+
+if(!giliran){
+giliran = 1;
+}
+
+function masuk(){
 
 document.getElementById("welcome").style.display="none";
-
-document.getElementById("menu").style.display="block";
+document.getElementById("potongan").style.display="block";
 
 }
 
-function pilih(style){
+function ambilGiliran(style){
 
-document.getElementById("pilihan").innerHTML=
-"Anda memilih: <b>" + style + "</b>";
+document.getElementById("jenis").innerHTML =
+"<b>" + style + "</b>";
+
+document.getElementById("nombor").innerHTML =
+"#" + giliran;
+
+document.getElementById("result").style.display="block";
+
+giliran++;
+
+localStorage.setItem("ixfan_giliran", giliran);
+
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:'smooth'
+});
 
 }
 
@@ -154,9 +210,3 @@ document.getElementById("pilihan").innerHTML=
 
 </body>
 </html>
-
-            Terima kasih kerana memilih Ixfan Barbershop.
-            Kami menyediakan perkhidmatan gunting rambut
-            yang kemas, moden dan profesional untuk semua pelanggan.
-            Kepuasan anda adalah keutamaan kami.
-        </p>
